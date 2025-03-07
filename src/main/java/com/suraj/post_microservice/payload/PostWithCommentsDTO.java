@@ -14,5 +14,5 @@ public class PostWithCommentsDTO {
     private UUID postID;
     private String title;
     private String content;
-    private List<CommentDTO> comments;
+    private PagedResponse comments;
 }

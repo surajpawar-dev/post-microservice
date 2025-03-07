@@ -2,9 +2,13 @@ package com.suraj.post_microservice.controller;
 
 import com.suraj.post_microservice.entity.Post;
 import com.suraj.post_microservice.payload.CommentDTO;
+import com.suraj.post_microservice.payload.PagedResponse;
 import com.suraj.post_microservice.payload.PostDTO;
 import com.suraj.post_microservice.payload.PostWithCommentsDTO;
 import com.suraj.post_microservice.service.PostService;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,14 +17,11 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("api/v1/posts")
 public class PostController {
 
     private final PostService postService;
-
-    public PostController(PostService postService) {
-        this.postService = postService;
-    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Post> getPostById(@PathVariable UUID id) {
@@ -43,12 +44,24 @@ public class PostController {
     }
 
     @GetMapping("/{postId}/comments")
-    public ResponseEntity<List<CommentDTO>> getAllComments(@PathVariable UUID postId) {
-        return new ResponseEntity<>(postService.getAllComments(postId), HttpStatus.OK);
+    public ResponseEntity<PagedResponse> getComments(
+            @PathVariable UUID postId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "createdAt") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortOrder
+    ) {
+        return new ResponseEntity<>(postService.getComments(postId, page ,size, sortBy,sortOrder), HttpStatus.OK);
     }
 
     @GetMapping("/{postId}/with-comments")
-    public ResponseEntity<PostWithCommentsDTO> getPostWithComments(@PathVariable UUID postId) {
-        return new ResponseEntity<>(postService.getPostWithComments(postId), HttpStatus.OK);
+    public ResponseEntity<PostWithCommentsDTO> getPostWithComments(
+            @PathVariable UUID postId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "createdAt") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortOrder
+    ) {
+        return new ResponseEntity<>(postService.getPostWithComments(postId,postId,page,size,sortBy,sortOrder), HttpStatus.OK);
     }
 }

@@ -17,4 +17,4 @@ spring:
 
 comment:
   service:
-    url: http://localhost:8081/api/v1/comment
+    url: http://localhost:8081/api/v1/comments
