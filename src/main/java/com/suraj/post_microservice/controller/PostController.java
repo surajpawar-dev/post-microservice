@@ -7,8 +7,6 @@ import com.suraj.post_microservice.payload.PostDTO;
 import com.suraj.post_microservice.payload.PostWithCommentsDTO;
 import com.suraj.post_microservice.service.PostService;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
